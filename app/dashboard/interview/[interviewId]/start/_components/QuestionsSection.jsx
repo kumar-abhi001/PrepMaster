@@ -30,11 +30,18 @@ const QuestionsSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
           {mockInterviewQuestion.map((question, index) => (
             <h2
               key={index}
+<<<<<<< HEAD
               className={`p-2 bg-primary rounded-full  text-xs md:text-sm text-center cursor-pointer 
                 ${
                   activeQuestionIndex === index
                     ? "bg-white font-bold border-2 border-black text-black"
                     : "text-white"
+=======
+              className={`p-2 bg-primary text-white rounded-full text-xs md:text-sm text-center cursor-pointer 
+                ${
+                  activeQuestionIndex === index &&
+                  "text-black font-bold bg-white border-2"
+>>>>>>> 1abf3a7 (Feedback Change)
                 }`}
             >
               Question #{index + 1}

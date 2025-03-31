@@ -72,12 +72,16 @@ const StartInterview = ({ params }) => {
         {/* End Interview Button */}
         {activeQuestionIndex === mockInterviewQuestion?.length - 1 && (
           <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
+<<<<<<< HEAD
             <Button className="text-white" disabled={isRecording}
               onClick={() => {
                 if ("speechSynthesis" in window) {
                   window.speechSynthesis.cancel();
                 }
             }}>
+=======
+            <Button className="text-white" disabled={isRecording}>
+>>>>>>> 1abf3a7 (Feedback Change)
               End Interview
             </Button>
           </Link>
