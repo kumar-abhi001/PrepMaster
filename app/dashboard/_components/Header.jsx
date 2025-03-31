@@ -5,7 +5,7 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle } from "@/components/themetoggle";
 
 export const Header = () => {
   const { theme, systemTheme } = useTheme();
