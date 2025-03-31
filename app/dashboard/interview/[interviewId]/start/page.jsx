@@ -9,47 +9,74 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const StartInterview = ({ params }) => {
-  const [interViewData, setInterviewData] = useState();
+  const [interviewData, setInterviewData] = useState();
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+  const [isRecording, setIsRecording] = useState(false); // Track recording state
+
   useEffect(() => {
     GetInterviewDetails();
   }, []);
+
   const GetInterviewDetails = async () => {
     const result = await db
       .select()
       .from(MockInterview)
       .where(eq(MockInterview.mockId, params.interviewId));
     const jsonMockResp = JSON.parse(result[0].jsonMockResp);
-    console.log(
-      "🚀 ~ file: page.jsx:18 ~ GetInterviewDetails ~ jsonMockResp:",
-      jsonMockResp
-    );
+    console.log("🚀 ~ GetInterviewDetails ~ jsonMockResp:", jsonMockResp);
     setMockInterviewQuestion(jsonMockResp);
     setInterviewData(result[0]);
   };
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Questions */}
+        {/* Questions Section */}
         <QuestionsSection
           mockInterviewQuestion={mockInterviewQuestion}
           activeQuestionIndex={activeQuestionIndex}
         />
-        {/* video or audion recording */}
+
+        {/* Video or Audio Recording Section */}
         <RecordAnswerSection
           mockInterviewQuestion={mockInterviewQuestion}
           activeQuestionIndex={activeQuestionIndex}
-          interviewData={interViewData}
+          interviewData={interviewData}
+          setIsRecording={setIsRecording} // Pass function to update recording state
         />
       </div>
-      <div className="flex justify-end gap-6">
-        {activeQuestionIndex > 0 && <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex-1)}>Previous Question</Button>}
-        {activeQuestionIndex!=mockInterviewQuestion?.length-1 && <Button onClick={()=>setActiveQuestionIndex(activeQuestionIndex+1)}>Next Question</Button>}
-        {activeQuestionIndex==mockInterviewQuestion?.length-1 &&
-        <Link href={'/dashboard/interview/'+interViewData?.mockId+'/feedback'}>
-         <Button>End Interview</Button>
-         </Link>}
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-end gap-6 mt-5">
+        {/* Previous Question Button */}
+        <Button
+          className="text-white"
+          disabled={isRecording || activeQuestionIndex === 0}
+          onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
+        >
+          Previous Question
+        </Button>
+
+        {/* Next Question Button */}
+        {activeQuestionIndex !== mockInterviewQuestion?.length - 1 && (
+          <Button
+            className="text-white"
+            disabled={isRecording}
+            onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
+          >
+            Next Question
+          </Button>
+        )}
+
+        {/* End Interview Button */}
+        {activeQuestionIndex === mockInterviewQuestion?.length - 1 && (
+          <Link href={`/dashboard/interview/${interviewData?.mockId}/feedback`}>
+            <Button className="text-white" disabled={isRecording}>
+              End Interview
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ const RecordAnswerSection = ({
   mockInterviewQuestion,
   activeQuestionIndex,
   interviewData,
+  setIsRecording,
 }) => {
   const [userAnswer, setUserAnswer] = useState("");
   const { user } = useUser();
@@ -47,11 +48,11 @@ const RecordAnswerSection = ({
   const StartStopRecording = async () => {
     if (isRecording) {
       stopSpeechToText();
-      // if (userAnswer?.length < 10) {
-      //   setLoading(false)
-      //   toast("Error while saving your answer,please record again");
-      //   return;
-      // }
+      if (userAnswer?.length < 10) {
+        setLoading(false);
+        toast("Error while saving your answer,please record again");
+        return;
+      }
     } else {
       startSpeechToText();
     }
@@ -60,14 +61,19 @@ const RecordAnswerSection = ({
   const UpdateUserAnswer = async () => {
     console.log(userAnswer, "########");
     setLoading(true);
-    const feedbackPrompt =
-      "Question:" +
-      mockInterviewQuestion[activeQuestionIndex]?.question +
-      ", User Answer:" +
-      userAnswer +
-      ",Depends on question and user answer for given interview question " +
-      " please give use rating for answer and feedback as area of improvement if any" +
-      " in just 3 to 5 lines to improve it in JSON format with rating field and feedback field";
+    const feedbackPrompt = `
+    Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}
+    User Answer: ${userAnswer}
+
+    Strictly and critically evaluate the user's answer based on the provided question. 
+    - If the answer is exceptionally clear, concise, accurate, and demonstrates deep understanding, provide a rating of 10/10 and highlight the strengths.
+    - If the answer is generally good but has minor flaws or omissions, provide a rating of 4/5 and suggest specific improvements.
+    - If the answer is mediocre, showing some understanding but lacking depth or clarity, provide a rating of 3/5 and detailed feedback on areas for improvement.
+    - If the answer is poor, demonstrating limited understanding or containing significant inaccuracies, provide a rating of 2/10 and clearly explain the shortcomings.
+    - If the answer is completely inadequate, irrelevant, or nonsensical ("zebrish"), provide a rating of 1/10 and state that the answer is unacceptable.
+    - Give overall rating accordingly
+    Provide the response in JSON format with "rating" (number, 1-10) and "feedback" (string) fields. Keep the feedback to 3-5 lines. Also include overall rating by combining all the questions rating. Be very strict in your rating.
+    `;
     console.log(
       "🚀 ~ file: RecordAnswerSection.jsx:38 ~ SaveUserAnswer ~ feedbackPrompt:",
       feedbackPrompt
@@ -119,10 +125,12 @@ const RecordAnswerSection = ({
           alt="webcam"
           priority
         />
-        {/* <Webcam
-          style={{ height: 300, width: "100%", zIndex: 10 }}
-          mirrored={true}
-        /> */}
+        {
+          <Webcam
+            style={{ height: 300, width: "100%", zIndex: 10 }}
+            mirrored={true}
+          />
+        }
       </div>
       <Button
         disabled={loading}
@@ -131,11 +139,17 @@ const RecordAnswerSection = ({
         onClick={StartStopRecording}
       >
         {isRecording ? (
-          <h2 className="text-red-600 items-center animate-pulse flex gap-2">
+          <h2
+            onClick={() => setIsRecording(false)}
+            className="text-red-600 items-center animate-pulse flex gap-2"
+          >
             <StopCircle /> Stop Recording...
           </h2>
         ) : (
-          <h2 className="text-primary flex gap-2 items-center">
+          <h2
+            onClick={() => setIsRecording(true)}
+            className="text-primary flex gap-2 items-center"
+          >
             <Mic /> Record Answer
           </h2>
         )}
