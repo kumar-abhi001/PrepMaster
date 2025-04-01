@@ -51,15 +51,16 @@ const RecordAnswerSection = ({
       if (userAnswer?.length < 10) {
         setLoading(false);
         toast("Error while saving your answer,please record again");
+        setIsRecording(false);
         return;
       }
     } else {
       startSpeechToText();
+      setIsRecording(true);
     }
   };
 
   const UpdateUserAnswer = async () => {
-    console.log(userAnswer, "########");
     setLoading(true);
     const feedbackPrompt = `
     Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}
@@ -140,14 +141,12 @@ const RecordAnswerSection = ({
       >
         {isRecording ? (
           <h2
-            onClick={() => setIsRecording(false)}
             className="text-red-600 items-center animate-pulse flex gap-2"
           >
             <StopCircle /> Stop Recording...
           </h2>
         ) : (
           <h2
-            onClick={() => setIsRecording(true)}
             className="text-primary flex gap-2 items-center"
           >
             <Mic /> Record Answer
