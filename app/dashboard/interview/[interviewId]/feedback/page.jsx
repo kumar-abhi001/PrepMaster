@@ -1,6 +1,6 @@
 "use client"
 import { db } from '@/utils/db';
-import { UserAnswer } from '@/utils/schema';
+import {  } from '@/utils/schema';
 import { eq } from 'drizzle-orm';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,11 +11,13 @@ import {
 import {ChevronsUpDown} from 'lucide-react'
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
+import { UserAnswer } from '@/utils/schema';
 
 
 
 const Feedback = ({params}) => {
   const [feedbackList,setFeedbackList] = useState([]);
+  const [overallRating, setOverallRating] = useState(0);
   const router = useRouter()
   useEffect(()=>{
     GetFeedback();
@@ -26,6 +28,12 @@ const Feedback = ({params}) => {
     .where(eq(UserAnswer.mockIdRef,params.interviewId))
     .orderBy(UserAnswer.id);
     console.log("🚀 ~ file: page.jsx:11 ~ GetFeedback ~ result:", result);
+    let ratingSum = 0, countRating = 0;
+    for(const res of result) {
+      ratingSum += Number(res.rating);
+      countRating++;
+    }
+    setOverallRating(ratingSum / countRating);
     setFeedbackList(result);
   }
   return (
@@ -36,7 +44,7 @@ const Feedback = ({params}) => {
       <h2 className='font-bold text-lg text-green-500'>No interview Feedback</h2>
       : <>
       <h2 className='text-primary text-lg my-2'>
-        Your overall interview rating: <strong>7/10</strong>
+        Your overall interview rating: <strong>{overallRating}/10</strong>
       </h2>
       <h2 className='text-sm text-gray-500'>Find below interview questions with coreect answers,Your answer and feedback for improvements for your next interview</h2>
       {feedbackList&&feedbackList.map((item,index)=>(
