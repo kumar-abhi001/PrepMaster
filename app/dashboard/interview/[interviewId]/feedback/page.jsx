@@ -1,6 +1,6 @@
 "use client"
 import { db } from '@/utils/db';
-import { UserAnswer } from '@/utils/schema';
+import {  } from '@/utils/schema';
 import { eq } from 'drizzle-orm';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,6 +11,7 @@ import {
 import {ChevronsUpDown} from 'lucide-react'
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
+import { UserAnswer } from '@/utils/schema';
 
 
 

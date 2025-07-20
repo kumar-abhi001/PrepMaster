@@ -51,15 +51,23 @@ const RecordAnswerSection = ({
       if (userAnswer?.length < 10) {
         setLoading(false);
         toast("Error while saving your answer,please record again");
+<<<<<<< HEAD
+<<<<<<< HEAD
+        setIsRecording(false);
+=======
+>>>>>>> 1abf3a7 (Feedback Change)
+=======
+        setIsRecording(false);
+>>>>>>> 7cf7c4b (Questions Page add)
         return;
       }
     } else {
       startSpeechToText();
+      setIsRecording(true);
     }
   };
 
   const UpdateUserAnswer = async () => {
-    console.log(userAnswer, "########");
     setLoading(true);
     const feedbackPrompt = `
     Question: ${mockInterviewQuestion[activeQuestionIndex]?.question}
@@ -140,14 +148,26 @@ const RecordAnswerSection = ({
       >
         {isRecording ? (
           <h2
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
             onClick={() => setIsRecording(false)}
+>>>>>>> 1abf3a7 (Feedback Change)
+=======
+>>>>>>> 7cf7c4b (Questions Page add)
             className="text-red-600 items-center animate-pulse flex gap-2"
           >
             <StopCircle /> Stop Recording...
           </h2>
         ) : (
           <h2
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
             onClick={() => setIsRecording(true)}
+>>>>>>> 1abf3a7 (Feedback Change)
+=======
+>>>>>>> 7cf7c4b (Questions Page add)
             className="text-primary flex gap-2 items-center"
           >
             <Mic /> Record Answer
