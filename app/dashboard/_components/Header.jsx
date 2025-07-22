@@ -1,92 +1,39 @@
-"use client";
+import { Button } from "components/ui/button";
+import { Code, Menu } from "lucide-react";
 
-import { useTheme } from "next-themes";
-import { UserButton } from "@clerk/nextjs";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ThemeToggle } from "@/components/themetoggle";
-import { toast } from "react-toastify";
-import { ToastContainer } from "react-toastify";
-export const Header = () => {
-  const { theme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const logoSrc =
-    currentTheme === "dark"
-      ? "/prepmaster-logo-r.png"
-      : "/prepmaster-logo-dark.png";
-
-  const fetchMockQuestions = async () => {
-    try {
-      const response = await fetch("/api/mock-questions"); // Replace with your actual API endpoint
-      const data = await response.json();
-      console.log("Mock Questions:", data);
-      toast.success("Mock interview questions loaded!");
-    } catch (error) {
-      console.error("Error fetching mock questions:", error);
-      toast.error("Failed to load questions.");
-    }
-  };
-
+const Header = () => {
   return (
-    <>
-      <ToastContainer />
-      <div className="sticky top-0 z-10 bg-white dark:bg-black flex p-4 items-center justify-between dark:bg-darkCard shadow-sm border-b-2">
-        {mounted && (
-          <Image
-            src={logoSrc}
-            alt="logo"
-            width={160}
-            height={100}
-            priority
-            className="transition-opacity duration-300 cursor-pointer"
-            onClick={() => router.push("/")}
-          />
-        )}
-
-        <ul className="hidden md:flex gap-6">
-          <li
-            className="hover:text-primaryDark hover:font-bold transition-all cursor-pointer"
-            onClick={() => router.push("/dashboard")}
-          >
-            Dashboard
-          </li>
-          <li
-            className="hover:text-primaryDark hover:font-bold transition-all cursor-pointer"
-            onClick={() => router.push("/questions")}
-          >
-            Questions
-          </li>
-          <li
-            className="hover:text-primaryDark hover:font-bold transition-all cursor-pointer"
-            onClick={() => toast.info("Coming Soon!")}
-          >
-            Upgrade
-          </li>
-          <li
-            className="hover:text-primaryDark hover:font-bold transition-all cursor-pointer"
-            onClick={() =>
-              toast.info(
-                "1. Select a job role 2. Start mock interview 3. Get feedback!"
-              )
-            }
-          >
-            How it works?
-          </li>
-        </ul>
-
-        <div className="flex items-center gap-4">
-          <ThemeToggle /> {/* Theme Switch Button */}
-          <UserButton />
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <Code className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-xl font-bold text-foreground">PrepMaster</span>
+          </div>
+          
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
+            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">How it Works</a>
+            <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
+          </nav>
+          
+          <div className="flex items-center space-x-4">
+            <Button variant="ghost" className="hidden md:inline-flex">
+              Sign In
+            </Button>
+            <Button variant="hero" size="lg">
+              Start Practicing
+            </Button>
+            <Button variant="ghost" size="icon" className="md:hidden">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </div>
-    </>
+    </header>
   );
 };
+
+export default Header;
