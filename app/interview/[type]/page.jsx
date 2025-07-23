@@ -23,30 +23,12 @@ const Interview = ({ params }) => {
 
   const handleStartInterview = () => {
     if (selectedType) {
-      router.push(`/interview/start?type=${type}&difficulty=${difficulty}`);
+      router.push(`/interview/interview-session?type=${type}&difficulty=${difficulty}`);
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 text-muted-foreground hover:text-foreground transition-colors">
-              <ArrowLeft className="h-5 w-5" />
-              <span>Back to Home</span>
-            </Link>
-            <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Brain className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-foreground">PrepMaster</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           {/* Page Header */}
@@ -105,7 +87,8 @@ const Interview = ({ params }) => {
 
             {/* Start Button */}
               <div className="text-center animate-slide-up">
-                <Button
+            <Link href={`/interview/interview-session?type=${type}&difficulty=${difficulty}`}>
+              <Button
                   size="lg"
                   onClick={handleStartInterview}
                   className="text-lg px-12 py-6"
@@ -113,6 +96,7 @@ const Interview = ({ params }) => {
                   <Play className="h-5 w-5 mr-2" />
                   Start Interview Session
                 </Button>
+            </Link>
                 <p className="text-sm text-muted-foreground mt-3">
                   Make sure you're in a quiet environment with good internet connection
                 </p>
