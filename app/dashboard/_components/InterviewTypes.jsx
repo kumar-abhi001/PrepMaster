@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Code2, Users, FileText, ArrowRight, Clock, Target } from "lucide-react";
+import Link from "next/link";
 
 const InterviewTypes = () => {
   const interviewTypes = [
     {
       icon: Code2,
       title: "DSA Interviews",
+      type: "DSA",
       description: "Practice data structures, algorithms, and coding problems with real-time code execution.",
       features: ["Live Code Editor", "Multiple Languages", "Complexity Analysis", "Optimal Solutions"],
       color: "text-tech-blue",
@@ -16,6 +18,7 @@ const InterviewTypes = () => {
     {
       icon: Users,
       title: "Managerial Interviews",
+      type: "Managerial-Interview",
       description: "Behavioral questions, leadership scenarios, and management case studies.",
       features: ["STAR Method", "Leadership Scenarios", "Team Management", "Conflict Resolution"],
       color: "text-tech-purple",
@@ -25,6 +28,7 @@ const InterviewTypes = () => {
     {
       icon: FileText,
       title: "CV-Based Interviews",
+      type: "CV-Based",
       description: "Questions tailored to your resume, experience, and career background.",
       features: ["Resume Analysis", "Experience Deep-dive", "Skill Assessment", "Career Progression"],
       color: "text-accent",
@@ -73,10 +77,13 @@ const InterviewTypes = () => {
                     <Clock className="h-4 w-4 mr-2" />
                     30-60 mins
                   </div>
-                  <Button variant="ghost" size="sm">
-                    Start Practice
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
+                  
+                  <Link href={`/interview/${type.type}`}>
+                    <Button variant="ghost" size="sm">
+                    Start Practice <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
+                  </Link>
+                 
                 </div>
               </CardContent>
             </Card>

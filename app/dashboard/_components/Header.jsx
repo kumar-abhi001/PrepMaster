@@ -1,9 +1,8 @@
 'use client';
 
-import { UserButton, SignedIn, SignedOut, SignInButton, SignOutButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignOutButton } from "@clerk/nextjs";
 import { Button } from "components/ui/button";
 import { Code, Menu } from "lucide-react";
-import { Loader2 } from "lucide-react";
 import LoaderOverlay from "components/ui/LoaderOveraly";
 import { useState } from "react";
 
