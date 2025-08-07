@@ -51,14 +51,8 @@ const RecordAnswerSection = ({
       if (userAnswer?.length < 10) {
         setLoading(false);
         toast("Error while saving your answer,please record again");
-<<<<<<< HEAD
-<<<<<<< HEAD
         setIsRecording(false);
-=======
->>>>>>> 1abf3a7 (Feedback Change)
-=======
         setIsRecording(false);
->>>>>>> 7cf7c4b (Questions Page add)
         return;
       }
     } else {

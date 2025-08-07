@@ -1,10 +1,11 @@
+import InterviewSession from "./_components/InterviewSession";
 
-const InterviewSession = () => {
+const InterviewSessions = () => {
     return (
         <div>
-            This is InterviewSession Page
+            <InterviewSession />
         </div>
     )
 }
 
-export default InterviewSession;
+export default InterviewSessions;
